@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EVRCore : MonoBehaviour
 {
 
@@ -35,7 +36,10 @@ public class EVRCore : MonoBehaviour
 
     private void Awake()
     {
+        m_modules = new List<IModule>();
+
         //Create all modules and add the to the list
+        AddModule(ModuleEvents.Instance);
 
         DontDestroyOnLoad(this);
     }
@@ -54,6 +58,12 @@ public class EVRCore : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void AddModule(IModule module, float updateRate = 2000)
+    {
+        m_modules.Add(module);
+        module.Init(updateRate);
     }
 }
    
