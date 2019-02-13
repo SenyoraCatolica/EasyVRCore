@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class InputStatics
 {
+    //Controller names from SteamVR camera
+    public static readonly string MainController = "Controller (right)";
+    public static readonly string AuxiliarController = "Controller (left)";
+
     //right controller
     public static readonly string Horizontal_Main_Axis = "R_Horizontal";
     public static readonly string Vertical_Main_Axis = "R_Vertical";
