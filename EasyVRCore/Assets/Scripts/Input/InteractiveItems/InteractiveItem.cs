@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 [System.Serializable]
 public struct InteractiveItemConfig
@@ -35,6 +35,79 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
     public abstract void Exit();
     public abstract void Hover();
     public abstract void Select();
+
+    [SerializeField] protected UnityEvent OnEnter;
+    [SerializeField] protected UnityEvent OnExit;
+    [SerializeField] protected UnityEvent OnHover;
+    [SerializeField] protected UnityEvent OnSelect;
+    [SerializeField] protected UnityEvent OnUnselect;
+
+    public virtual void Awake()
+    {
+        ModuleInput.Instance.RegisterInteractiveItem(this, gameObject);
+
+        if (OnEnter == null)
+            OnEnter = new UnityEvent();
+
+        if (OnExit == null)
+            OnExit = new UnityEvent();
+
+        if (OnHover == null)
+            OnHover = new UnityEvent();
+
+        if (OnSelect == null)
+            OnSelect = new UnityEvent();
+    }
+
+    public virtual void Init()
+    {
+        m_enabled = false;
+    }
+
+    public void RegisterOnEnter(UnityAction action)
+    {
+        OnEnter.AddListener(action);
+    }
+
+    public void DeregisterOnEnter(UnityAction action)
+    {
+        OnEnter.RemoveListener(action);
+    }
+
+    public void RegisterOnExit(UnityAction action)
+    {
+        OnExit.AddListener(action);
+    }
+
+    public void DeregisterOnExit(UnityAction action)
+    {
+        OnExit.RemoveListener(action);
+    }
+
+    public void RegisterOnHover(UnityAction action)
+    {
+        OnHover.AddListener(action);
+    }
+
+    public void DeregisterOnHover(UnityAction action)
+    {
+        OnHover.RemoveListener(action);
+    }
+
+    public void RegisterOnSelect(UnityAction action)
+    {
+        OnSelect.AddListener(action);
+    }
+
+    public void DeregisterOnSelect(UnityAction action)
+    {
+        OnSelect.RemoveListener(action);
+    }
+
+    public void ClearOnSelect()
+    {
+        OnSelect.RemoveAllListeners();
+    }
 
     public bool IsAutoselect()
     {
