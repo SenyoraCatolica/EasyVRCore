@@ -33,11 +33,15 @@ public class ModuleInput : Module
 
     private Dictionary<GameObject, IInteractiveItem> m_interactiveItems = new Dictionary<GameObject, IInteractiveItem>();
 
+
+    public GameObject MainController;
+    public GameObject AuxiliarController;
+
     public override void Init(float updateRate)
     {
         base.Init(updateRate);
         CreateSelectionMethod();
-        Resources.UnloadUnusedAssets();
+        SetDeviceControllers();
     }
 
     public override void Update()
@@ -71,5 +75,11 @@ public class ModuleInput : Module
     public Ray GetCurrentRay()
     {
         return m_deviceInput.GetCurrentPositionRay();
+    }
+
+    private void SetDeviceControllers()
+    {
+        MainController = GameObject.Find(InputStatics.MainController);
+        AuxiliarController = GameObject.Find(InputStatics.MainController);
     }
 }

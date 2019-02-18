@@ -35,6 +35,7 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
     public abstract void Exit();
     public abstract void Hover();
     public abstract void Select();
+    public abstract void Unselect();
 
     [SerializeField] protected UnityEvent OnEnter;
     [SerializeField] protected UnityEvent OnExit;
@@ -57,6 +58,9 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
 
         if (OnSelect == null)
             OnSelect = new UnityEvent();
+
+        if (OnUnselect == null)
+            OnUnselect = new UnityEvent();
     }
 
     public virtual void Init()
@@ -100,6 +104,16 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
     }
 
     public void DeregisterOnSelect(UnityAction action)
+    {
+        OnSelect.RemoveListener(action);
+    }
+
+    public void RegisterOnUnselect(UnityAction action)
+    {
+        OnSelect.AddListener(action);
+    }
+
+    public void DeregisterOnUnselect(UnityAction action)
     {
         OnSelect.RemoveListener(action);
     }
