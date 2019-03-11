@@ -5,7 +5,7 @@ using System;
 public enum DeviceSelection
 {
     CARDBOARD = 0,
-    VIVEorOCULUS = 1,
+    VIVEOrOCULUS = 1,
 }
 
 [Serializable]

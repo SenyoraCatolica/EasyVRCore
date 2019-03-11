@@ -17,8 +17,6 @@ public abstract class DeviceInputBase : IDeviceInput
     public abstract void Init(InputGeneralConfig config);
     public abstract void Clear();
     public abstract void ShowSelection(bool enabled);
-    public abstract void Dispose();
-
 
     public virtual void Update(Dictionary<GameObject, IInteractiveItem> interactiveItems)
     {

@@ -40,6 +40,7 @@ public class EVRCore : MonoBehaviour
 
         //Create all modules and add the to the list
         AddModule(ModuleEvents.Instance);
+        AddModule(ModuleInput.Instance);
 
         DontDestroyOnLoad(this);
     }

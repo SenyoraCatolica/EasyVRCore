@@ -26,11 +26,6 @@ public class DeviceInputViveOrRift : DeviceInputBase
         m_enabled = false;
     }
 
-    public override void Dispose()
-    {
-
-    }
-
     public override void ShowSelection(bool enabled)
     {
         m_enabled = enabled;

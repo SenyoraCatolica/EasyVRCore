@@ -45,7 +45,7 @@ public class DeviceInputFactory
                         deviceInput = new DeviceInputCardboard();
                         break;
                     }
-                case DeviceSelection.VIVEorOCULUS:
+                case DeviceSelection.VIVEOrOCULUS:
                     {
                         deviceInput = new DeviceInputViveOrRift();
                         break;
