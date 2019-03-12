@@ -33,6 +33,7 @@ public class ModuleInput : Module
 
     private Dictionary<GameObject, IInteractiveItem> m_interactiveItems = new Dictionary<GameObject, IInteractiveItem>();
 
+    bool m_dragInputSystem = false;
 
     public GameObject MainController;
     public GameObject AuxiliarController;
@@ -42,6 +43,9 @@ public class ModuleInput : Module
         base.Init(updateRate);
         CreateSelectionMethod();
         SetDeviceControllers();
+
+        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnEnableGrabInput"), OnEnableDragInputSystem);
+        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnDisableGrabInput"), OnDisableDragInputSystem);
     }
 
     public override void Update()
@@ -51,7 +55,13 @@ public class ModuleInput : Module
             return;
         }
 
-        m_deviceInput.Update(m_interactiveItems);
+        if(!m_dragInputSystem)
+            m_deviceInput.Update(m_interactiveItems);
+
+        else
+        {
+
+        }
     }
 
     public override void Clear()
@@ -81,5 +91,20 @@ public class ModuleInput : Module
     {
         MainController = GameObject.Find(InputStatics.MainController);
         AuxiliarController = GameObject.Find(InputStatics.MainController);
+    }
+
+    public bool GetDragInputSystem()
+    {
+        return m_dragInputSystem;
+    }
+
+    private void OnEnableDragInputSystem(object sender, System.EventArgs e)
+    {
+        m_dragInputSystem = true;
+    }
+
+    private void OnDisableDragInputSystem(object sender, System.EventArgs e)
+    {
+        m_dragInputSystem = false;
     }
 }
