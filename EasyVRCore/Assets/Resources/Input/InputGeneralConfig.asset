@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForceSelectionMethod: 0
   deviceSelection: 0
-  UIReticleSize: 0
-  SelectionTime: 0
+  UIReticleSize: 1
+  SelectionTime: 1
   InputBinding: []
