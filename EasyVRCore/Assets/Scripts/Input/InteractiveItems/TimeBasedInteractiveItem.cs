@@ -5,8 +5,7 @@ namespace EverisUI
 {
     public class TimeBasedInteractiveItem : SimpleClickInteractiveItem
     {
-        [SerializeField]
-        float m_selectionTime;
+        public float SelectionTime;
 
         float m_currentTime;
 
@@ -34,16 +33,13 @@ namespace EverisUI
         {
             base.Hover();
 
-            if (!m_alreadySelect && m_selectionTime != 0)
+            if (!m_alreadySelect && SelectionTime != 0)
             {
                 m_currentTime += Time.deltaTime;
 
-                if (OnHoverValue != null)
-                {
-                    OnHoverValue(m_currentTime / m_selectionTime);
-                }
+                OnHoverValue?.Invoke(m_currentTime / SelectionTime);
 
-                if (m_currentTime >= m_selectionTime)
+                if (m_currentTime >= SelectionTime)
                 {
                     Select();
                     m_currentTime = 0f;

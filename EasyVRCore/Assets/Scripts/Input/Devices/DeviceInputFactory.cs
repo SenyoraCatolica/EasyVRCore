@@ -53,6 +53,7 @@ public class DeviceInputFactory
             }
         }
 
+        deviceInput.Init(config);
         return deviceInput;
    }
 }

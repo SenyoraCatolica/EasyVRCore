@@ -28,7 +28,6 @@ public class UIItemInteraction : MonoBehaviour
                 m_item.RegisterOnEnter(OnEnter);
                 m_item.RegisterOnExit(OnExit);
                 m_item.RegisterOnSelect(OnSelect);
-
             }
 
             else

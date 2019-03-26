@@ -76,7 +76,7 @@ public abstract class DeviceInputBase : IDeviceInput
                     {
                         interactiveItems[m_previousObject].Hover();
 
-                        if (!interactiveItems[m_previousObject].IsAutoselect())
+                        if (interactiveItems[m_previousObject].IsAutoselect())
                         {
                             m_fillValue += Time.deltaTime;
                         }

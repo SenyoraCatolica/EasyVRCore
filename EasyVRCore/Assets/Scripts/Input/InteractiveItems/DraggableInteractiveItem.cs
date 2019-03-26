@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum DragType { MOVE, GRAB, NONE}
-
 namespace EverisUI
 {
     public class DraggableInteractiveItem : SimpleClickInteractiveItem
     {
-        public DragType TypeOfDragging;
+
+        bool isDragging = false;
 
         public override void Select()
         {
@@ -17,14 +16,16 @@ namespace EverisUI
 
             ModuleEvents.Instance.RaiseEvent(gameObject, Resources.Load<EVREvent>("Events/OnDragItem"));
 
-            Move();
+            isDragging = true;
         }
 
         public override void Unselect()
         {
-            base.Select();
+            base.Unselect();
 
             ModuleEvents.Instance.RaiseEvent(gameObject, Resources.Load<EVREvent>("Events/OnUnDragItem"));
+
+            isDragging = false;
         }
 
         private void Move()
@@ -32,6 +33,14 @@ namespace EverisUI
             float distance_to_ray_origin = (transform.position - ModuleInput.Instance.GetCurrentRay().origin).magnitude;
             Ray currentRay = ModuleInput.Instance.GetCurrentRay();
             transform.position = currentRay.origin + currentRay.direction * distance_to_ray_origin;
+        }
+
+        private void Update()
+        {
+            if(isDragging)
+            {
+                Move();
+            }
         }
     }
 }
