@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EverisUI
+namespace ExtendedVRUI
 {
     public class TimeBasedInteractiveItem : SimpleClickInteractiveItem
     {

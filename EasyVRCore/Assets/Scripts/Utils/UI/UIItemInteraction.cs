@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using EverisUI;
+using ExtendedVRUI;
 using UnityEngine.UI;
 
 public class UIItemInteraction : MonoBehaviour

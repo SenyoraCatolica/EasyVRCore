@@ -1,4 +1,4 @@
-﻿using EverisUI;
+﻿using ExtendedVRUI;
 using UnityEngine;
 using UnityEngine.UI;
 

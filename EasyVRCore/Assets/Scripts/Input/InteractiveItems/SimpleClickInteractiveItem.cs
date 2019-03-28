@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EverisUI
+namespace ExtendedVRUI
 {
     public class SimpleClickInteractiveItem : InteractiveItem
     {
