@@ -33,6 +33,7 @@ namespace ExtendedVRUI
             float distance_to_ray_origin = (transform.position - ModuleInput.Instance.GetCurrentRay().origin).magnitude;
             Ray currentRay = ModuleInput.Instance.GetCurrentRay();
             transform.position = currentRay.origin + currentRay.direction * distance_to_ray_origin;
+           // transform.LookAt(currentRay.origin, -Vector3.up);
         }
 
         private void Update()
