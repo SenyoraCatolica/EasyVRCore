@@ -12,10 +12,6 @@ public class CameraMove : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            Debug.Log(Input.GetAxis(InputStatics.Vertical_Main_Axis).ToString());
-            Debug.Log(Input.GetAxis(InputStatics.Horizontal_Main_Axis).ToString());
-
-
             transform.Rotate(new Vector3(Input.GetAxis(InputStatics.Vertical_Main_Axis) * speed, Input.GetAxis(InputStatics.Horizontal_Main_Axis) * speed, 0));
             X = transform.rotation.eulerAngles.x;
             Y = transform.rotation.eulerAngles.y;

@@ -25,7 +25,7 @@ public abstract class DeviceInputBase : IDeviceInput
             return;
         }
 
-        if (m_currentObject != null && interactiveItems[m_currentObject].StaysSelected())
+        /*if (m_currentObject != null && interactiveItems[m_currentObject].StaysSelected())
         {
             if (Input.GetButtonDown(InputStatics.Main_Selection))
             {
@@ -35,7 +35,7 @@ public abstract class DeviceInputBase : IDeviceInput
             }
             interactiveItems[m_currentObject].Hover();
             return;
-        }
+        }*/
 
 
         Ray ray = GetCurrentPositionRay();
@@ -83,11 +83,21 @@ public abstract class DeviceInputBase : IDeviceInput
                         if (Input.GetButtonDown("R_Selection"))
                         {
                             m_fillValue = 0f;
-                            interactiveItems[m_previousObject].Select();
-                            if (interactiveItems[m_previousObject].StaysSelected())
+
+                            if(interactiveItems[m_previousObject].IsSelected() && interactiveItems[m_previousObject].IsUnselectable())
                             {
-                                m_currentObject = hitObject;
-                                interactiveItems[m_previousObject].SetSelected(true);
+                                interactiveItems[m_previousObject].Unselect();
+                                interactiveItems[m_previousObject].SetSelected(false);
+                            }
+
+                            else
+                            {
+                                interactiveItems[m_previousObject].Select();
+                                if (interactiveItems[m_previousObject].StaysSelected())
+                                {
+                                    m_currentObject = hitObject;
+                                    interactiveItems[m_previousObject].SetSelected(true);
+                                }
                             }
                         }
                         else if ((m_fillValue / m_selectionTime) >= 1.0f)

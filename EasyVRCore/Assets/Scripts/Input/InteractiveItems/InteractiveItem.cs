@@ -10,6 +10,7 @@ public struct InteractiveItemConfig
     public bool BlocksInput;
     public bool Autoselect;
     public bool AllowRepeatSelection;
+    public bool AllowUnselect;
 
     public bool StaysSelected;
     private bool m_isSelected_;
@@ -140,7 +141,7 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
 
     public bool IsSelected()
     {
-        return m_config.StaysSelected;
+        return m_config.IsSelected();
     }
 
     public void SetSelected(bool isSelected)
@@ -151,5 +152,10 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
     public bool StaysSelected()
     {
         return m_config.StaysSelected;
+    }
+
+    public bool IsUnselectable()
+    {
+        return m_config.AllowUnselect;
     }
 }
