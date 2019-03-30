@@ -9,12 +9,15 @@ namespace ExtendedVRUI
     {
 
         bool isDragging = false;
+        float m_distanceToRayOrigin = 0;
 
         public override void Select()
         {
             base.Select();
 
             ModuleEvents.Instance.RaiseEvent(gameObject, Resources.Load<EVREvent>("Events/OnDragItem"));
+
+            m_distanceToRayOrigin = (transform.position - ModuleInput.Instance.GetCurrentRay().origin).magnitude;
 
             isDragging = true;
         }
@@ -30,9 +33,8 @@ namespace ExtendedVRUI
 
         private void Move()
         {
-            float distance_to_ray_origin = (transform.position - ModuleInput.Instance.GetCurrentRay().origin).magnitude;
             Ray currentRay = ModuleInput.Instance.GetCurrentRay();
-            transform.position = currentRay.origin + currentRay.direction * distance_to_ray_origin;
+            transform.position = currentRay.origin + currentRay.direction * m_distanceToRayOrigin;
             transform.LookAt(currentRay.origin, -Vector3.up);
         }
 
