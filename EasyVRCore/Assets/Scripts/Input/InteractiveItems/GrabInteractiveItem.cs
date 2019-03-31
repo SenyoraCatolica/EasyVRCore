@@ -8,6 +8,10 @@ public class GrabInteractiveItem : MonoBehaviour
     GameObject m_grabedObject;
     Rigidbody m_rigidBody;
 
+    private void Start()
+    {
+        ModuleInput.Instance.RegisterPhysicItem(this, gameObject);
+    }
 
     private void SetCollidingObject(Collider col)
     {

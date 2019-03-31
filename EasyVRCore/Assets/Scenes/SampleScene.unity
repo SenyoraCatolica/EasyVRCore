@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -260,8 +260,9 @@ MonoBehaviour:
   m_config:
     BlocksInput: 0
     Autoselect: 0
-    AllowRepeatSelection: 0
-    StaysSelected: 0
+    AllowRepeatSelection: 1
+    AllowUnselect: 1
+    StaysSelected: 1
   m_enabled: 1
   OnEnter:
     m_PersistentCalls:
@@ -551,6 +552,36 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1076967888338194464, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2502620102263566702, guid: c32ff180b67fec642aecb50471fe1f7d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -656,31 +687,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
-        type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8937908159012423720, guid: c32ff180b67fec642aecb50471fe1f7d,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 9205579363903797563, guid: c32ff180b67fec642aecb50471fe1f7d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -745,11 +751,6 @@ PrefabInstance:
         type: 3}
       propertyPath: SelectionTime
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1076967888338194464, guid: c32ff180b67fec642aecb50471fe1f7d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c32ff180b67fec642aecb50471fe1f7d, type: 3}

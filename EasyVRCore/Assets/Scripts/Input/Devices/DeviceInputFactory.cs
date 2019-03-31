@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class DeviceInputFactory
 {
@@ -30,6 +31,8 @@ public class DeviceInputFactory
 
     #endregion
 
+    private string detectedHMD;
+
    public IDeviceInput GetDeviceSelection()
    {
         IDeviceInput deviceInput = null;
@@ -43,6 +46,7 @@ public class DeviceInputFactory
                 case DeviceSelection.CARDBOARD:
                     {
                         deviceInput = new DeviceInputCardboard();
+                        ModuleInput.Instance.Device = DeviceType.CARDBOARD;
                         break;
                     }
                 case DeviceSelection.VIVEOrOCULUS:
@@ -56,4 +60,25 @@ public class DeviceInputFactory
         deviceInput.Init(config);
         return deviceInput;
    }
+
+    private void DetectConnectedHDM()
+    {
+        detectedHMD = XRDevice.model;
+        if (detectedHMD.ToLower().Contains("vive"))
+        {
+            // Must be a Vive headset.
+            ModuleInput.Instance.Device = DeviceType.VIVE;
+        }
+        else if (detectedHMD.ToLower().Contains("oculus"))
+        {
+            // Must be an Oculus headset.
+            ModuleInput.Instance.Device = DeviceType.RIFT;
+        }
+        else
+        {
+            // Must be a Windows VR headset.
+            ModuleInput.Instance.Device = DeviceType.WINDOWS;
+        }
+    }
+
 }

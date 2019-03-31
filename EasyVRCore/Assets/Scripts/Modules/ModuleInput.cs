@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum DeviceType { CARDBOARD, RIFT, VIVE, WINDOWS}
+
 public class ModuleInput : Module
 {
     #region Instance
@@ -31,20 +34,20 @@ public class ModuleInput : Module
     private IDeviceInput m_deviceInput;
 
     private Dictionary<GameObject, IInteractiveItem> m_interactiveItems = new Dictionary<GameObject, IInteractiveItem>();
+    private Dictionary<GameObject, GrabInteractiveItem> m_physicItems = new Dictionary<GameObject, GrabInteractiveItem>();
 
     bool m_dragInputSystem = false;
 
     public GameObject MainController;
     public GameObject AuxiliarController;
 
+    public DeviceType Device;
+
     public override void Init(float updateRate)
     {
         base.Init(updateRate);
         CreateSelectionMethod();
         SetDeviceControllers();
-
-        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnEnableGrabInput"), OnEnableDragInputSystem);
-        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnDisableGrabInput"), OnDisableDragInputSystem);
     }
 
     public override void Update()
@@ -57,9 +60,10 @@ public class ModuleInput : Module
         if(!m_dragInputSystem)
             m_deviceInput.Update(m_interactiveItems);
 
-        else
+        if(Device == DeviceType.RIFT || Device == DeviceType.VIVE)
+        if (Input.GetButtonDown(InputStatics.Main_Selection) && Input.GetButtonDown(InputStatics.Auxiliar_Selection))
         {
-
+            ToggleInteractionMode();
         }
     }
 
@@ -78,6 +82,14 @@ public class ModuleInput : Module
         if (!m_interactiveItems.ContainsKey(interactiveObject))
         {
             m_interactiveItems[interactiveObject] = interactiveItem;
+        }
+    }
+
+    public void RegisterPhysicItem(GrabInteractiveItem item, GameObject itemObject)
+    {
+        if (!m_physicItems.ContainsKey(itemObject))
+        {
+            m_physicItems[itemObject] = item;
         }
     }
 
@@ -105,5 +117,24 @@ public class ModuleInput : Module
     private void OnDisableDragInputSystem(object sender, System.EventArgs e)
     {
         m_dragInputSystem = false;
+    }
+
+    private void ToggleInteractionMode()
+    {
+
+        m_dragInputSystem = !m_dragInputSystem;
+
+        ModuleEvents.Instance.RaiseEvent(null, Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), new BoolEventArgs(m_dragInputSystem));
+
+
+        foreach(GameObject go in m_interactiveItems.Keys)
+        {
+            go.GetComponent<InteractiveItem>().enabled = m_dragInputSystem;
+        }
+
+        foreach (GameObject go in m_physicItems.Keys)
+        {
+            m_physicItems[go].enabled = !m_dragInputSystem;
+        }
     }
 }
