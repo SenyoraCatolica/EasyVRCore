@@ -58,6 +58,7 @@ public class DeviceInputFactory
         }
 
         deviceInput.Init(config);
+        DetectConnectedHDM();
         return deviceInput;
    }
 

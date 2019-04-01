@@ -36,7 +36,7 @@ public class ModuleInput : Module
     private Dictionary<GameObject, IInteractiveItem> m_interactiveItems = new Dictionary<GameObject, IInteractiveItem>();
     private Dictionary<GameObject, GrabInteractiveItem> m_physicItems = new Dictionary<GameObject, GrabInteractiveItem>();
 
-    bool m_dragInputSystem = false;
+    bool m_dragInputSystem = true;
 
     public GameObject MainController;
     public GameObject AuxiliarController;
@@ -57,7 +57,7 @@ public class ModuleInput : Module
             return;
         }
 
-        if(!m_dragInputSystem)
+        if(m_dragInputSystem)
             m_deviceInput.Update(m_interactiveItems);
 
         if(Device == DeviceType.RIFT || Device == DeviceType.VIVE)
@@ -90,12 +90,31 @@ public class ModuleInput : Module
         if (!m_physicItems.ContainsKey(itemObject))
         {
             m_physicItems[itemObject] = item;
+            item.enabled = false;
         }
     }
 
     public Ray GetCurrentRay()
     {
         return m_deviceInput.GetCurrentPositionRay();
+    }
+
+    public Transform GetRayOriginMain()
+    {
+        if(Device == DeviceType.CARDBOARD)
+        {
+            return Camera.main.transform;
+        }
+
+        else
+        {
+            return GameObject.Find(InputStatics.MainController).transform;
+        }
+    }
+
+    public Transform GetRayOriginAuxiliar()
+    {
+        return GameObject.Find(InputStatics.AuxiliarController).transform;
     }
 
     private void SetDeviceControllers()
@@ -124,7 +143,6 @@ public class ModuleInput : Module
 
         m_dragInputSystem = !m_dragInputSystem;
 
-        ModuleEvents.Instance.RaiseEvent(null, Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), new BoolEventArgs(m_dragInputSystem));
 
 
         foreach(GameObject go in m_interactiveItems.Keys)
@@ -136,5 +154,12 @@ public class ModuleInput : Module
         {
             m_physicItems[go].enabled = !m_dragInputSystem;
         }
+
+        ModuleEvents.Instance.RaiseEvent(null, Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), new BoolEventArgs(m_dragInputSystem));
+    }
+
+    public bool IsGragEnabled()
+    {
+        return m_dragInputSystem;
     }
 }

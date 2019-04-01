@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,65 +12,24 @@ public class GrabInteractiveItem : MonoBehaviour
     private void Start()
     {
         ModuleInput.Instance.RegisterPhysicItem(this, gameObject);
+
+        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnUnGrabItem"), OnGrabbed);
+        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnUnGrabItem"), OnReleased);
+
     }
 
-    private void SetCollidingObject(Collider col)
+    private void Update()
     {
-        if (m_colliderObject || !col.GetComponent<Rigidbody>())
-            return;
-        else
-            m_colliderObject = col.gameObject;
+        Debug.Log(GetComponent<Rigidbody>().velocity.ToString());
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnGrabbed(object sender, EventArgs eventArgs)
     {
-        SetCollidingObject(other);
+        Debug.Log(gameObject.name + " Grabbed");
     }
 
-    public void OnTriggerStay(Collider other)
+    public void OnReleased(object sender, EventArgs eventArgs)
     {
-        SetCollidingObject(other);
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (!m_colliderObject)
-        {
-            return;
-        }
-
-        m_colliderObject = null;
-    }
-
-
-    void GrabItem()
-    {
-        m_grabedObject = m_colliderObject;
-        m_colliderObject = null;
-
-        Joint joint = AddFixedJoint();
-        joint.connectedBody = m_grabedObject.GetComponent<Rigidbody>();
-    }
-
-    private void ReleaseObject()
-    {
-        if (GetComponent<FixedJoint>())
-        {
-            GetComponent<FixedJoint>().connectedBody = null;
-            Destroy(GetComponent<FixedJoint>());
-            m_grabedObject.GetComponent<Rigidbody>().velocity = m_rigidBody.velocity;
-            m_grabedObject.GetComponent<Rigidbody>().angularVelocity = m_rigidBody.angularVelocity;
-        }
-        m_grabedObject = null;
-    }
-
-
-
-    private FixedJoint AddFixedJoint()
-    {
-        FixedJoint fx = gameObject.AddComponent<FixedJoint>();
-        fx.breakForce = 20000;
-        fx.breakTorque = 20000;
-        return fx;
+        Debug.Log(gameObject.name + " Released");
     }
 }
