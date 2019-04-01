@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d85a1257ddfe04f8069f42dd620266, type: 3}
   m_Name: InputGeneralConfig
   m_EditorClassIdentifier: 
-  ForceSelectionMethod: 0
-  deviceSelection: 0
+  ForceSelectionMethod: 1
+  deviceSelection: 1
   UIReticleSize: 1
   SelectionTime: 1
   InputBinding: []
