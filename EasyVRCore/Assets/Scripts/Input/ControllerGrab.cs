@@ -7,8 +7,10 @@ public class ControllerGrab : MonoBehaviour
 {
     GameObject m_colliderObject;
     GameObject m_grabedObject;
-    Rigidbody m_rigidBody;
     LineRenderer m_line;
+
+    SteamVR_TrackedObject trackedObj;
+    SteamVR_Controller.Device device;
 
     bool m_enabled = false;
     bool m_isControllerRight;
@@ -23,6 +25,9 @@ public class ControllerGrab : MonoBehaviour
             m_isControllerRight = true;
         else
             m_isControllerRight = false;
+
+        trackedObj = GetComponent<SteamVR_TrackedObject>();
+        device = SteamVR_Controller.Input((int)trackedObj.index);
     }
 
     private void Update()
@@ -103,7 +108,6 @@ public class ControllerGrab : MonoBehaviour
 
         Joint joint = AddFixedJoint();
         joint.connectedBody = m_grabedObject.GetComponent<Rigidbody>();
-        m_rigidBody = m_grabedObject.GetComponent<Rigidbody>();
 
         ModuleEvents.Instance.RaiseEvent(this, Resources.Load<EVREvent>("Events/OnGrabItem"));
     }
@@ -114,8 +118,8 @@ public class ControllerGrab : MonoBehaviour
         {
             GetComponent<FixedJoint>().connectedBody = null;
             Destroy(GetComponent<FixedJoint>());
-            m_grabedObject.GetComponent<Rigidbody>().velocity = m_rigidBody.velocity;
-            m_grabedObject.GetComponent<Rigidbody>().angularVelocity = m_rigidBody.angularVelocity;
+            m_grabedObject.GetComponent<Rigidbody>().velocity = device.velocity * 2;
+            m_grabedObject.GetComponent<Rigidbody>().angularVelocity = device.angularVelocity;
         }
         m_grabedObject = null;
 
