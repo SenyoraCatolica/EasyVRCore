@@ -25,19 +25,6 @@ public abstract class DeviceInputBase : IDeviceInput
             return;
         }
 
-        /*if (m_currentObject != null && interactiveItems[m_currentObject].StaysSelected())
-        {
-            if (Input.GetButtonDown(InputStatics.Main_Selection))
-            {
-                interactiveItems[m_currentObject].Select();
-                interactiveItems[m_currentObject].SetSelected(false);
-                m_currentObject = null;
-            }
-            interactiveItems[m_currentObject].Hover();
-            return;
-        }*/
-
-
         Ray ray = GetCurrentPositionRay();
 
         RaycastHit[] raycastHit = Physics.RaycastAll(ray, m_rayLength, ~m_ignoreChannel);

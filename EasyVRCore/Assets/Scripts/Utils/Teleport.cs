@@ -22,8 +22,7 @@ public class Teleport : MonoBehaviour {
 
     void Update()
     {
-
-        if(main_ray_origin == null)
+        if (main_ray_origin == null)
         {
             main_ray_origin = ModuleInput.Instance.GetRayOriginMain();
         }
@@ -48,7 +47,7 @@ public class Teleport : MonoBehaviour {
         }
 
         //Only move the user if the target object is active
-        if (Input.GetButtonUp(InputStatics.Main_Trigger) && target.activeInHierarchy)
+        if (InputStatics.MainTriggerButtonState(InputStatics.InputStates.Up) && target.activeInHierarchy)
         {
             ray = new Ray(main_ray_origin.position, main_ray_origin.forward);
 
