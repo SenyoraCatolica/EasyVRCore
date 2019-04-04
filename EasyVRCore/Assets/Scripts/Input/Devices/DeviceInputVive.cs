@@ -2,40 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class DeviceInputCardboard : DeviceInputBase
+public class DeviceInputVive : DeviceInputBase
 {
     private Canvas m_inputCanvas = null;
-    private Image m_pointerImage = null;
-    private Image m_radialImage = null;
 
-    public DeviceInputCardboard()
+    public DeviceInputVive()
     {
-        MonoBehaviour.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Input/Cardboard/CardboardCamera"));
-        GameObject go = Resources.Load<GameObject>("Prefabs/Input/Cardboard/CardboardReticleCanvas");
-        m_inputCanvas = MonoBehaviour.Instantiate<GameObject>(go).GetComponent<Canvas>();
-        m_inputCanvas.name = "InputCanvas";
-        m_inputCanvas.transform.SetParent(Camera.main.transform, false);
-        m_pointerImage = m_inputCanvas.transform.Find("Reticle").GetComponent<Image>();
-        m_radialImage = m_inputCanvas.transform.Find("Radial").GetComponent<Image>();
-        m_rayLength = Camera.main.farClipPlane;
-        m_raySetPosition = Camera.main.transform;
+        GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/ViveOrRiftCamera") as GameObject;
+        GameObject tmp = MonoBehaviour.Instantiate<GameObject>(go);
+        m_raySetPosition = GetController(tmp);
+        m_rayLength = Mathf.Infinity;
     }
 
     public override void Init(InputGeneralConfig config)
     {
-        m_pointerImage.rectTransform.localScale = m_pointerImage.rectTransform.localScale * config.UIReticleSize;
-        m_radialImage.rectTransform.localScale = m_radialImage.rectTransform.localScale * config.UIReticleSize;
-        m_selectionTime = config.SelectionTime;
-        m_radialImage.fillAmount = m_fillValue = 0f;
         m_enabled = true;
-    }
-
-    public override void Update(Dictionary<GameObject, IInteractiveItem> interactiveItems)
-    {
-        base.Update(interactiveItems);
-        m_radialImage.fillAmount = m_fillValue / m_selectionTime;
+        m_selectionTime = Mathf.Infinity;
     }
 
     public override void Clear()
@@ -54,6 +37,12 @@ public class DeviceInputCardboard : DeviceInputBase
         {
             m_inputCanvas.enabled = true;
         }
+    }
+
+    private Transform GetController(GameObject go)
+    {
+        Transform ret = go.transform.Find(InputStatics.MainController);
+        return ret;
     }
 
     public override bool MainTiggerButton(InputButtonStates state)

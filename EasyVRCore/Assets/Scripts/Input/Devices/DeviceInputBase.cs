@@ -2,6 +2,9 @@
 using UnityEngine;
 using EVR.UI;
 
+
+public enum InputButtonStates { UP, DOWN, PRESS, NONE}
+
 public abstract class DeviceInputBase : IDeviceInput
 {
     protected bool m_enabled = false;
@@ -17,6 +20,10 @@ public abstract class DeviceInputBase : IDeviceInput
     public abstract void Init(InputGeneralConfig config);
     public abstract void Clear();
     public abstract void ShowSelection(bool enabled);
+
+    public abstract bool MainTiggerButton(InputButtonStates state);
+    public abstract bool AuxiliarTiggerButton(InputButtonStates state);
+
 
     public virtual void Update(Dictionary<GameObject, IInteractiveItem> interactiveItems)
     {

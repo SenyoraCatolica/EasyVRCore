@@ -51,7 +51,7 @@ public class DeviceInputFactory
                     }
                 case DeviceSelection.VIVEOrOCULUS:
                     {
-                        deviceInput = new DeviceInputViveOrRift();
+                        deviceInput = new DeviceInputVive();
                         break;
                     }
             }
