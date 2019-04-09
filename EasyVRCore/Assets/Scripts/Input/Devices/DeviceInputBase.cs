@@ -27,98 +27,109 @@ public abstract class DeviceInputBase : IDeviceInput
 
     public virtual void Update(Dictionary<GameObject, IInteractiveItem> interactiveItems)
     {
-        if (!m_enabled)
+        if (m_currentObject != null)
         {
-            return;
-        }
-
-        Ray ray = GetCurrentPositionRay();
-
-        RaycastHit[] raycastHit = Physics.RaycastAll(ray, m_rayLength, ~m_ignoreChannel);
-        if (raycastHit.Length == 0)
-        {
-            if (m_previousObject != null)
+            foreach (GameObject go in interactiveItems.Keys)
             {
-                interactiveItems[m_previousObject].Exit();
-                m_previousObject = null;
-                m_fillValue = 0f;
-            }
-        }
-        else
-        {
-            int length = raycastHit.Length;
-
-            int closest_object_index = 0;
-            float closest_object_distance = Mathf.Infinity;
-            for (int i = 0; i < raycastHit.Length; ++i)
-            {
-                if (raycastHit[i].distance < closest_object_distance)
+                if (interactiveItems[go].IsSelected())
                 {
-                    closest_object_index = i;
-                    closest_object_distance = raycastHit[i].distance;
+                    if (interactiveItems[go].StaysSelected())
+                    {
+                        m_currentObject = go;
+
+                        if (MainTiggerButton(InputButtonStates.UP))
+                        {
+                            interactiveItems[go].Select();
+                            interactiveItems[go].SetSelected(false);
+                            m_currentObject = null;
+                            return;
+                        }
+                    }
                 }
             }
+        }
 
-            GameObject hitObject = raycastHit[closest_object_index].collider.gameObject;
-
-            //if the object is not in the dictionary let's check if it has an interactive item attached
-            if (interactiveItems.ContainsKey(hitObject))
+        else
+        {
+            Ray ray = GetCurrentPositionRay();
+            RaycastHit[] raycastHit = Physics.RaycastAll(ray, m_rayLength, m_ignoreChannel);
+            if (raycastHit.Length == 0)
             {
-                if (hitObject == m_previousObject)
+                if (m_previousObject != null)
                 {
-                    if (interactiveItems[m_previousObject].IsSelectable())
+                    interactiveItems[m_previousObject].Exit();
+                    m_previousObject = null;
+                    m_fillValue = 0f;
+                }
+            }
+            else
+            {
+                int length = raycastHit.Length;
+
+                int closest_object_index = 0;
+                float closest_object_distance = Mathf.Infinity;
+                for (int i = 0; i < raycastHit.Length; ++i)
+                {
+                    if (raycastHit[i].distance < closest_object_distance)
                     {
-                        interactiveItems[m_previousObject].Hover();
+                        closest_object_index = i;
+                        closest_object_distance = raycastHit[i].distance;
+                    }
+                }
 
-                        if (interactiveItems[m_previousObject].IsAutoselect())
-                        {
-                            m_fillValue += Time.deltaTime;
-                        }
-                        if (Input.GetButtonDown("R_Selection"))
-                        {
-                            m_fillValue = 0f;
+                GameObject hitObject = raycastHit[closest_object_index].collider.gameObject;
 
-                            if(interactiveItems[m_previousObject].IsSelected() && interactiveItems[m_previousObject].IsUnselectable())
+                //if the object is not in the dictionary let's check if it has an interactive item attached
+                if (interactiveItems.ContainsKey(hitObject))
+                {
+
+                    if (hitObject == m_previousObject)
+                    {
+                        if (interactiveItems[m_previousObject].IsSelectable())
+                        {
+                            interactiveItems[m_previousObject].Hover();
+
+                            if (!interactiveItems[m_previousObject].IsAutoselect())
                             {
-                                interactiveItems[m_previousObject].Unselect();
-                                interactiveItems[m_previousObject].SetSelected(false);
+                                m_fillValue += Time.deltaTime;
                             }
-
-                            else
+                            if (MainTiggerButton(InputButtonStates.DOWN))
                             {
+                                m_fillValue = 0f;
                                 interactiveItems[m_previousObject].Select();
                                 if (interactiveItems[m_previousObject].StaysSelected())
                                 {
-                                    m_currentObject = hitObject;
                                     interactiveItems[m_previousObject].SetSelected(true);
+                                    m_currentObject = m_previousObject;
+                                }
+                            }
+                            else if ((m_fillValue / m_selectionTime) >= 1.0f)
+                            {
+                                m_fillValue = 0f;
+                                interactiveItems[m_previousObject].Select();
+                                if (interactiveItems[m_previousObject].StaysSelected())
+                                {
+                                    interactiveItems[m_previousObject].SetSelected(true);
+                                    m_currentObject = m_previousObject;
                                 }
                             }
                         }
-                        else if ((m_fillValue / m_selectionTime) >= 1.0f)
-                        {
-                            m_fillValue = 0f;
-                            interactiveItems[m_previousObject].Select();
-                            if (interactiveItems[m_previousObject].StaysSelected())
-                            {
-                                m_currentObject = hitObject;
-                                interactiveItems[m_previousObject].SetSelected(true);
-                            }
-                        }
                     }
-                }
-                else
-                {
-                    m_fillValue = 0f;
-                    if (m_previousObject != null)
+                    else
                     {
-                        interactiveItems[m_previousObject].Exit();
+                        m_fillValue = 0f;
+                        if (m_previousObject != null)
+                        {
+                            interactiveItems[m_previousObject].Exit();
+                        }
+                        m_previousObject = hitObject;
+                        interactiveItems[m_previousObject].Enter();
                     }
-                    m_previousObject = hitObject;
-                    interactiveItems[m_previousObject].Enter();
                 }
-            }
 
+            }
         }
+
     }
 
     public Ray GetCurrentPositionRay()
