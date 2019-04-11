@@ -14,5 +14,6 @@
         void SetSelected(bool isSelected);
         bool StaysSelected();
         bool IsUnselectable();
+        bool IsDragAndDrop();
     }
 }

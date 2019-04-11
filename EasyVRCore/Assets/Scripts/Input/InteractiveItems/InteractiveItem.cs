@@ -11,6 +11,7 @@ public struct InteractiveItemConfig
     public bool Autoselect;
     public bool AllowRepeatSelection;
     public bool AllowUnselect;
+    public bool DragAndDrop;
 
     public bool StaysSelected;
     private bool m_isSelected_;
@@ -157,5 +158,10 @@ public abstract class InteractiveItem : MonoBehaviour, IInteractiveItem
     public bool IsUnselectable()
     {
         return m_config.AllowUnselect;
+    }
+
+    public bool IsDragAndDrop()
+    {
+        return m_config.DragAndDrop;
     }
 }

@@ -33,11 +33,22 @@ public abstract class DeviceInputBase : IDeviceInput
             {
                 if (interactiveItems[go].IsSelected())
                 {
-                    if (interactiveItems[go].StaysSelected())
+                    if (interactiveItems[go].IsDragAndDrop())
                     {
-                        m_currentObject = go;
-
+                        //Unselect object drag and drop
                         if (MainTiggerButton(InputButtonStates.UP))
+                        {
+                            interactiveItems[go].Select();
+                            interactiveItems[go].SetSelected(false);
+                            m_currentObject = null;
+                            return;
+                        }
+                    }
+
+                    else
+                    {
+                        //Unselect object click
+                        if (MainTiggerButton(InputButtonStates.DOWN))
                         {
                             interactiveItems[go].Select();
                             interactiveItems[go].SetSelected(false);
@@ -52,7 +63,7 @@ public abstract class DeviceInputBase : IDeviceInput
         else
         {
             Ray ray = GetCurrentPositionRay();
-            RaycastHit[] raycastHit = Physics.RaycastAll(ray, m_rayLength, m_ignoreChannel);
+            RaycastHit[] raycastHit = Physics.RaycastAll(ray, m_rayLength, ~m_ignoreChannel);
             if (raycastHit.Length == 0)
             {
                 if (m_previousObject != null)
@@ -78,7 +89,7 @@ public abstract class DeviceInputBase : IDeviceInput
                 }
 
                 GameObject hitObject = raycastHit[closest_object_index].collider.gameObject;
-
+                Debug.Log(hitObject.name);
                 //if the object is not in the dictionary let's check if it has an interactive item attached
                 if (interactiveItems.ContainsKey(hitObject))
                 {
@@ -89,7 +100,7 @@ public abstract class DeviceInputBase : IDeviceInput
                         {
                             interactiveItems[m_previousObject].Hover();
 
-                            if (!interactiveItems[m_previousObject].IsAutoselect())
+                            if (interactiveItems[m_previousObject].IsAutoselect())
                             {
                                 m_fillValue += Time.deltaTime;
                             }

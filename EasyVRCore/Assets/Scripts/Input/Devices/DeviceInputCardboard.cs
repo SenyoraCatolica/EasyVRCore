@@ -64,13 +64,13 @@ public class DeviceInputCardboard : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = Input.GetButtonUp(InputStatics.Main_Trigger);
+                ret = Input.GetButtonUp(InputStatics.Main_Selection);
                 break;
             case InputButtonStates.DOWN:
-                ret = Input.GetButtonDown(InputStatics.Main_Trigger);
+                ret = Input.GetButtonDown(InputStatics.Main_Selection);
                 break;
             case InputButtonStates.PRESS:
-                ret = Input.GetButton(InputStatics.Main_Trigger);
+                ret = Input.GetButton(InputStatics.Main_Selection);
                 break;
             case InputButtonStates.NONE:
                 break;
