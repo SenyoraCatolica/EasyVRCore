@@ -61,7 +61,7 @@ public class ModuleInput : Module
             m_deviceInput.Update(m_interactiveItems);
 
         if(Device == DeviceType.RIFT || Device == DeviceType.VIVE)
-        if (Input.GetButtonDown(InputStatics.Main_Selection) && Input.GetButtonDown(InputStatics.Auxiliar_Selection))
+        if (Input.GetButton(InputStatics.Main_Selection) && Input.GetButton(InputStatics.Auxiliar_Selection))
         {
             ToggleInteractionMode();
         }
@@ -158,7 +158,7 @@ public class ModuleInput : Module
         ModuleEvents.Instance.RaiseEvent(null, Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), new BoolEventArgs(m_dragInputSystem));
     }
 
-    public bool IsGragEnabled()
+    public bool IsDragEnabled()
     {
         return m_dragInputSystem;
     }

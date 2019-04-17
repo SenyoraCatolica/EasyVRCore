@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class ControllerGrab : MonoBehaviour
 {
+    [SerializeField] GameObject m_handModel;
+    [SerializeField] GameObject m_controllerModel;
+
+    Animator m_handAnimator;
+
     GameObject m_colliderObject;
     GameObject m_grabedObject;
     LineRenderer m_line;
@@ -17,7 +22,7 @@ public class ControllerGrab : MonoBehaviour
 
     private void Start()
     {
-        m_enabled = ModuleInput.Instance.IsGragEnabled();
+        m_enabled = ModuleInput.Instance.IsDragEnabled();
         ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), OnDragModeChanged);
         m_line = GetComponentInChildren<LineRenderer>();
 
@@ -28,6 +33,9 @@ public class ControllerGrab : MonoBehaviour
 
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         device = SteamVR_Controller.Input((int)trackedObj.index);
+
+        m_handAnimator = m_handModel.GetComponent<Animator>();
+        m_handModel.SetActive(true);
     }
 
     private void Update()
@@ -140,6 +148,9 @@ public class ControllerGrab : MonoBehaviour
     {
         m_enabled = !((BoolEventArgs)eventArgs).Bool;
 
-        m_line.enabled = !m_enabled;        
+        m_line.enabled = !m_enabled;
+
+        m_handModel.SetActive(m_enabled);
+        m_controllerModel.SetActive(!m_enabled);
     }
 }
