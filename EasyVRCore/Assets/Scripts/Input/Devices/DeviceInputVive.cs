@@ -9,9 +9,8 @@ public class DeviceInputVive : DeviceInputBase
 
     public DeviceInputVive()
     {
-        GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/ViveOrRiftCamera") as GameObject;
+        GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/SteamVRCamera") as GameObject;
         GameObject tmp = MonoBehaviour.Instantiate<GameObject>(go);
-        m_raySetPosition = GetController(tmp);
         m_rayLength = Mathf.Infinity;
     }
 
@@ -41,8 +40,7 @@ public class DeviceInputVive : DeviceInputBase
 
     private Transform GetController(GameObject go)
     {
-        Transform ret = go.transform.Find(InputStatics.MainController);
-        return ret;
+        return ModuleInput.Instance.MainController.transform;
     }
 
     public override bool MainTiggerButton(InputButtonStates state)

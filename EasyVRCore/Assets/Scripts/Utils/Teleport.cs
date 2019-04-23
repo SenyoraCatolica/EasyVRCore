@@ -47,7 +47,7 @@ public class Teleport : MonoBehaviour {
         }
 
         //Only move the user if the target object is active
-        if (InputStatics.MainTriggerButtonState(InputStatics.InputStates.Up) && target.activeInHierarchy)
+        if (ModuleInput.Instance.GetMainTriggerButton(InputButtonStates.UP) && target.activeInHierarchy)
         {
             ray = new Ray(main_ray_origin.position, main_ray_origin.forward);
 

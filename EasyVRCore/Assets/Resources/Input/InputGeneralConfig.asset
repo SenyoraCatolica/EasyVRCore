@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: InputGeneralConfig
   m_EditorClassIdentifier: 
   ForceSelectionMethod: 1
-  deviceSelection: 1
+  deviceSelection: 2
   UIReticleSize: 1
   SelectionTime: 1
-  InputBinding: []

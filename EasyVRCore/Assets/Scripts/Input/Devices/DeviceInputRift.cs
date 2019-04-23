@@ -6,12 +6,14 @@ using UnityEngine;
 public class DeviceInputRift : DeviceInputBase
 {
     private Canvas m_inputCanvas = null;
+    bool m_mainAxisInUse = false;
+    bool m_auxAxisInUse = false;
+
 
     public DeviceInputRift()
     {
-        GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/ViveOrRiftCamera") as GameObject;
+        GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/OculusCamera") as GameObject;
         GameObject tmp = MonoBehaviour.Instantiate<GameObject>(go);
-        m_raySetPosition = GetController(tmp);
         m_rayLength = Mathf.Infinity;
     }
 
@@ -41,8 +43,7 @@ public class DeviceInputRift : DeviceInputBase
 
     private Transform GetController(GameObject go)
     {
-        Transform ret = go.transform.Find(InputStatics.MainController);
-        return ret;
+        return ModuleInput.Instance.MainController.transform;
     }
 
     public override bool MainTiggerButton(InputButtonStates state)
@@ -56,10 +57,25 @@ public class DeviceInputRift : DeviceInputBase
                 ret = (Input.GetAxis(InputStatics.Main_Trigger) < 0.5f);
                 break;
             case InputButtonStates.DOWN:
-                ret = (Input.GetAxis(InputStatics.Main_Trigger) == 1.0f);
+                if (Input.GetAxisRaw(InputStatics.Main_Trigger) != 0)
+                {
+                    if (!m_mainAxisInUse)
+                    {
+                        m_mainAxisInUse = true;
+                        ret = true;
+                    }
+                }
+
+                if (Input.GetAxisRaw(InputStatics.Main_Trigger) == 0)
+                {
+                    m_mainAxisInUse = false;
+                }
+
+                ret = false;
                 break;
+
             case InputButtonStates.PRESS:
-                ret = (Input.GetAxis(InputStatics.Main_Trigger) == 1.0f);
+                ret = (Input.GetAxisRaw(InputStatics.Main_Trigger) == 1.0f);
                 break;
             case InputButtonStates.NONE:
                 break;
@@ -79,10 +95,25 @@ public class DeviceInputRift : DeviceInputBase
                 ret = (Input.GetAxis(InputStatics.Auxiliar_Trigger) < 0.5f);
                 break;
             case InputButtonStates.DOWN:
-                ret = (Input.GetAxis(InputStatics.Auxiliar_Trigger) == 1.0f);
+                if (Input.GetAxisRaw(InputStatics.Main_Trigger) != 0)
+                {
+                    if (!m_auxAxisInUse)
+                    {
+                        m_auxAxisInUse = true;
+                        ret = true;
+                    }
+                }
+
+                if (Input.GetAxisRaw(InputStatics.Main_Trigger) == 0)
+                {
+                    m_auxAxisInUse = false;
+                }
+
+                ret = false;
                 break;
+
             case InputButtonStates.PRESS:
-                ret = (Input.GetAxis(InputStatics.Auxiliar_Trigger) == 1.0f);
+                ret = (Input.GetAxisRaw(InputStatics.Auxiliar_Trigger) == 1.0f);
                 break;
             case InputButtonStates.NONE:
                 break;

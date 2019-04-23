@@ -22,11 +22,11 @@ public class ControllerGrab : MonoBehaviour
 
     private void Start()
     {
-        m_enabled = ModuleInput.Instance.IsDragEnabled();
+        m_enabled = !ModuleInput.Instance.IsDragEnabled();
         ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), OnDragModeChanged);
         m_line = GetComponentInChildren<LineRenderer>();
 
-        if (gameObject.name == InputStatics.MainController)
+        if (gameObject.name == ModuleInput.Instance.MainController.name)
             m_isControllerRight = true;
         else
             m_isControllerRight = false;
@@ -44,7 +44,7 @@ public class ControllerGrab : MonoBehaviour
         {
             if(m_isControllerRight)
             {
-                if (Input.GetButtonUp(InputStatics.Main_Selection))
+                if (ModuleInput.Instance.GetMainTriggerButton(InputButtonStates.UP))
                 {
                     if (m_colliderObject && !m_grabedObject)
                     {
@@ -62,7 +62,7 @@ public class ControllerGrab : MonoBehaviour
 
             else
             {
-                if (Input.GetButtonUp(InputStatics.Auxiliar_Selection))
+                if (ModuleInput.Instance.GetAuxiliarTriggerButton(InputButtonStates.UP))
                 {
                     if (m_colliderObject && !m_grabedObject)
                     {
@@ -150,7 +150,10 @@ public class ControllerGrab : MonoBehaviour
 
         m_line.enabled = !m_enabled;
 
-        m_handModel.SetActive(m_enabled);
-        m_controllerModel.SetActive(!m_enabled);
+        if(m_handModel)
+            m_handModel.SetActive(m_enabled);
+
+        if(m_controllerModel)
+            m_controllerModel.SetActive(!m_enabled);
     }
 }

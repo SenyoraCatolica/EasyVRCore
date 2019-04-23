@@ -5,15 +5,8 @@ using System;
 public enum DeviceSelection
 {
     CARDBOARD = 0,
-    VIVEOrOCULUS = 1,
-}
-
-[Serializable]
-public struct InputBinding
-{
-    public DeviceSelection SelectionMethod;
-    public int ButtonId;
-    public string InputCommand;
+    VIVE = 1,
+    RIFT = 2
 }
 
 [CreateAssetMenu(fileName = "InputGeneralConfig", menuName = "Input/DeviceConfig", order = 1)]
@@ -27,6 +20,4 @@ public class InputGeneralConfig : ScriptableObject
     public float UIReticleSize;
     [SerializeField]
     public float SelectionTime;
-    [SerializeField]
-    List<InputBinding> InputBinding;
 }

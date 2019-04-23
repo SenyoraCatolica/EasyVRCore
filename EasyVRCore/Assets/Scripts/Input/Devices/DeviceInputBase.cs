@@ -38,7 +38,7 @@ public abstract class DeviceInputBase : IDeviceInput
                         //Unselect object drag and drop
                         if (MainTiggerButton(InputButtonStates.UP))
                         {
-                            interactiveItems[go].Select();
+                            interactiveItems[go].Unselect();
                             interactiveItems[go].SetSelected(false);
                             m_currentObject = null;
                             return;
@@ -50,7 +50,7 @@ public abstract class DeviceInputBase : IDeviceInput
                         //Unselect object click
                         if (MainTiggerButton(InputButtonStates.DOWN))
                         {
-                            interactiveItems[go].Select();
+                            interactiveItems[go].Unselect();
                             interactiveItems[go].SetSelected(false);
                             m_currentObject = null;
                             return;
@@ -145,7 +145,7 @@ public abstract class DeviceInputBase : IDeviceInput
 
     public Ray GetCurrentPositionRay()
     {
-        Ray ray = new Ray(m_raySetPosition.position, m_raySetPosition.forward);
+        Ray ray = new Ray(ModuleInput.Instance.MainController.transform.position, ModuleInput.Instance.MainController.transform.forward);
         return ray;
     }
 

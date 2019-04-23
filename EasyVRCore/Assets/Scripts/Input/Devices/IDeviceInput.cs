@@ -10,4 +10,7 @@ public interface IDeviceInput
     void Clear();
     void ShowSelection(bool enabled);
     Ray GetCurrentPositionRay();
+
+    bool MainTiggerButton(InputButtonStates state);
+    bool AuxiliarTiggerButton(InputButtonStates state);
 }
