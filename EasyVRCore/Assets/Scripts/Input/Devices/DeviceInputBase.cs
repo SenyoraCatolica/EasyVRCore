@@ -92,7 +92,7 @@ public abstract class DeviceInputBase : IDeviceInput
                 }
 
                 GameObject hitObject = raycastHit[closest_object_index].collider.gameObject;
-                Debug.Log(hitObject.name);
+
                 //if the object is not in the dictionary let's check if it has an interactive item attached
                 if (interactiveItems.ContainsKey(hitObject))
                 {

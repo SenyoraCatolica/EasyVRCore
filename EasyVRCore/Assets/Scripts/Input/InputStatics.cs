@@ -15,6 +15,7 @@ public static class InputStatics
     public static readonly string Vertical_Main_Axis = "R_Vertical";
     public static readonly string Main_Selection = "R_Selection";
     public static readonly string Main_Trigger = "R_Trigger";
+    public static readonly string Main_Trigger_Rift = "Oculus_CrossPlatform_SecondaryIndexTrigger";
     public static readonly string Main_TriggerAxis = "R_TriggerAxis";
     public static readonly string Main_Grip = "R_Grip";
 

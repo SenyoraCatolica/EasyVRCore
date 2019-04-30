@@ -11,11 +11,18 @@ public class DeviceInputRift : DeviceInputBase
     bool m_mainGripAxisInUse = false;
     bool m_auxGripAxisInUse = false;
 
+    private LineRenderer m_line;
+
+
     public DeviceInputRift()
     {
         GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/OculusCamera") as GameObject;
         GameObject tmp = MonoBehaviour.Instantiate<GameObject>(go);
         m_rayLength = Mathf.Infinity;
+
+        SetControllers();
+        m_raySetPosition = ModuleInput.Instance.MainController.transform;
+        m_line = ModuleInput.Instance.MainController.GetComponent<LineRenderer>();
     }
 
     public override void Init(InputGeneralConfig config)
@@ -47,6 +54,26 @@ public class DeviceInputRift : DeviceInputBase
         return ModuleInput.Instance.MainController.transform;
     }
 
+    public override void Update(Dictionary<GameObject, IInteractiveItem> interactiveItems)
+    {
+        if (MainGripButton(InputButtonStates.PRESS))
+        {
+            m_line.enabled = false;
+            return;
+        }
+
+        else
+        {
+            m_line.enabled = true;
+            base.Update(interactiveItems);
+        }
+    }
+
+    private void SetControllers()
+    {
+        ModuleInput.Instance.SetControllers(GameObject.Find(InputStatics.OculusMainController), GameObject.Find(InputStatics.OculusAuxiliarController));
+    }
+
     #region ButtonsMapping
 
     public override bool MainTiggerButton(InputButtonStates state)
@@ -57,10 +84,10 @@ public class DeviceInputRift : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = (Input.GetAxis(InputStatics.Main_Trigger) < 0.5f);
+                ret = (Input.GetAxis(InputStatics.Main_Trigger_Rift) < 0.5f);
                 break;
             case InputButtonStates.DOWN:
-                if (Input.GetAxisRaw(InputStatics.Main_Trigger) != 0)
+                if (Input.GetAxis(InputStatics.Main_Trigger_Rift) != 0)
                 {
                     if (!m_mainAxisInUse)
                     {
@@ -69,16 +96,14 @@ public class DeviceInputRift : DeviceInputBase
                     }
                 }
 
-                if (Input.GetAxisRaw(InputStatics.Main_Trigger) == 0)
+                if (Input.GetAxisRaw(InputStatics.Main_Trigger_Rift) == 0)
                 {
                     m_mainAxisInUse = false;
                 }
-
-                ret = false;
                 break;
 
             case InputButtonStates.PRESS:
-                ret = (Input.GetAxisRaw(InputStatics.Main_Trigger) == 1.0f);
+                ret = (Input.GetAxisRaw(InputStatics.Main_Trigger_Rift) != 0);
                 break;
             case InputButtonStates.NONE:
                 break;
@@ -98,7 +123,7 @@ public class DeviceInputRift : DeviceInputBase
                 ret = (Input.GetAxis(InputStatics.Auxiliar_Trigger) < 0.5f);
                 break;
             case InputButtonStates.DOWN:
-                if (Input.GetAxisRaw(InputStatics.Main_Trigger) != 0)
+                if (Input.GetAxis(InputStatics.Main_Trigger) != 0)
                 {
                     if (!m_auxAxisInUse)
                     {
@@ -112,7 +137,6 @@ public class DeviceInputRift : DeviceInputBase
                     m_auxAxisInUse = false;
                 }
 
-                ret = false;
                 break;
 
             case InputButtonStates.PRESS:

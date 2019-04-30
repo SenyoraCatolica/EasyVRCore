@@ -17,11 +17,8 @@ public class TouchInteractiveItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         if(other.tag == InputStatics.PlayerHandCollider)
         {
-            Debug.Log("PlayerHand");
-
             if (OnSelect != null)
                 OnSelect.Invoke();
         }

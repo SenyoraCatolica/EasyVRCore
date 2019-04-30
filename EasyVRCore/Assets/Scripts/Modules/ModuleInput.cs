@@ -36,8 +36,6 @@ public class ModuleInput : Module
     private Dictionary<GameObject, IInteractiveItem> m_interactiveItems = new Dictionary<GameObject, IInteractiveItem>();
     private Dictionary<GameObject, GrabInteractiveItem> m_physicItems = new Dictionary<GameObject, GrabInteractiveItem>();
 
-    bool m_dragInputSystem = true;
-
     public GameObject MainController;
     public GameObject AuxiliarController;
 
@@ -47,7 +45,6 @@ public class ModuleInput : Module
     {
         base.Init(updateRate);
         CreateSelectionMethod();
-        SetDeviceControllers();
     }
 
     public override void Update()
@@ -57,14 +54,7 @@ public class ModuleInput : Module
             return;
         }
 
-        if(m_dragInputSystem)
-            m_deviceInput.Update(m_interactiveItems);
-
-        if(Device == DeviceType.RIFT || Device == DeviceType.VIVE)
-        if (Input.GetButton(InputStatics.Main_Selection) && Input.GetButton(InputStatics.Auxiliar_Selection))
-        {
-            ToggleInteractionMode();
-        }
+        m_deviceInput.Update(m_interactiveItems);
     }
 
     public override void Clear()
@@ -173,46 +163,6 @@ public class ModuleInput : Module
         }
     }
 
-    public bool GetDragInputSystem()
-    {
-        return m_dragInputSystem;
-    }
-
-    private void OnEnableDragInputSystem(object sender, System.EventArgs e)
-    {
-        m_dragInputSystem = true;
-    }
-
-    private void OnDisableDragInputSystem(object sender, System.EventArgs e)
-    {
-        m_dragInputSystem = false;
-    }
-
-    private void ToggleInteractionMode()
-    {
-
-        m_dragInputSystem = !m_dragInputSystem;
-
-
-
-        foreach(GameObject go in m_interactiveItems.Keys)
-        {
-            go.GetComponent<InteractiveItem>().enabled = m_dragInputSystem;
-        }
-
-        foreach (GameObject go in m_physicItems.Keys)
-        {
-            m_physicItems[go].enabled = !m_dragInputSystem;
-        }
-
-        ModuleEvents.Instance.RaiseEvent(null, Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), new BoolEventArgs(m_dragInputSystem));
-    }
-
-    public bool IsDragEnabled()
-    {
-        return m_dragInputSystem;
-    }
-
     public bool GetMainTriggerButton(InputButtonStates state)
     {
         return m_deviceInput.MainTiggerButton(state);
@@ -229,5 +179,11 @@ public class ModuleInput : Module
             return (DeviceInputRift)m_deviceInput;
 
         return null;
+    }
+
+    public void SetControllers(GameObject main, GameObject aux)
+    {
+        MainController = main;
+        AuxiliarController = aux;
     }
 }

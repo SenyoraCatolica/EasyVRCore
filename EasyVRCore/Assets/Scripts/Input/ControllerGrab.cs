@@ -22,7 +22,6 @@ public class ControllerGrab : MonoBehaviour
 
     private void Start()
     {
-        m_enabled = !ModuleInput.Instance.IsDragEnabled();
         ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), OnDragModeChanged);
         m_line = GetComponentInChildren<LineRenderer>();
 
