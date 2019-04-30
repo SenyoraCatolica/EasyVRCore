@@ -36,8 +36,6 @@ public class ModuleInput : Module
     private Dictionary<GameObject, IInteractiveItem> m_interactiveItems = new Dictionary<GameObject, IInteractiveItem>();
     private Dictionary<GameObject, GrabInteractiveItem> m_physicItems = new Dictionary<GameObject, GrabInteractiveItem>();
 
-    bool m_dragInputSystem = true;
-
     public GameObject MainController;
     public GameObject AuxiliarController;
 
@@ -47,7 +45,6 @@ public class ModuleInput : Module
     {
         base.Init(updateRate);
         CreateSelectionMethod();
-        SetDeviceControllers();
     }
 
     public override void Update()
@@ -57,14 +54,7 @@ public class ModuleInput : Module
             return;
         }
 
-        if(m_dragInputSystem)
-            m_deviceInput.Update(m_interactiveItems);
-
-        if(Device == DeviceType.RIFT || Device == DeviceType.VIVE)
-        if (Input.GetButtonDown(InputStatics.Main_Selection) && Input.GetButtonDown(InputStatics.Auxiliar_Selection))
-        {
-            ToggleInteractionMode();
-        }
+        m_deviceInput.Update(m_interactiveItems);
     }
 
     public override void Clear()
@@ -101,65 +91,99 @@ public class ModuleInput : Module
 
     public Transform GetRayOriginMain()
     {
-        if(Device == DeviceType.CARDBOARD)
+        Transform ret = null;
+
+        switch (Device)
         {
-            return Camera.main.transform;
+            case DeviceType.CARDBOARD:
+                ret = Camera.main.transform;
+                break;
+
+            case DeviceType.RIFT:
+                ret = GameObject.Find(InputStatics.OculusMainController).transform;
+                break;
+            case DeviceType.VIVE:
+                ret = GameObject.Find(InputStatics.SteamVRMainController).transform;
+
+                break;
+            case DeviceType.WINDOWS:
+                ret = ret = Camera.main.transform;
+                break;
         }
 
-        else
-        {
-            return GameObject.Find(InputStatics.MainController).transform;
-        }
+        return ret;
     }
 
     public Transform GetRayOriginAuxiliar()
     {
-        return GameObject.Find(InputStatics.AuxiliarController).transform;
+        Transform ret = null;
+
+        switch (Device)
+        {
+            case DeviceType.CARDBOARD:
+                break;
+
+            case DeviceType.RIFT:
+                ret = GameObject.Find(InputStatics.OculusAuxiliarController).transform;
+                break;
+            case DeviceType.VIVE:
+                ret = GameObject.Find(InputStatics.SteamVRAuxiliarController).transform;
+
+                break;
+            case DeviceType.WINDOWS:
+                break;
+        }
+
+        return ret;
     }
 
     private void SetDeviceControllers()
     {
-        MainController = GameObject.Find(InputStatics.MainController);
-        AuxiliarController = GameObject.Find(InputStatics.MainController);
-    }
+        Transform ret = null;
 
-    public bool GetDragInputSystem()
-    {
-        return m_dragInputSystem;
-    }
-
-    private void OnEnableDragInputSystem(object sender, System.EventArgs e)
-    {
-        m_dragInputSystem = true;
-    }
-
-    private void OnDisableDragInputSystem(object sender, System.EventArgs e)
-    {
-        m_dragInputSystem = false;
-    }
-
-    private void ToggleInteractionMode()
-    {
-
-        m_dragInputSystem = !m_dragInputSystem;
-
-
-
-        foreach(GameObject go in m_interactiveItems.Keys)
+        switch (Device)
         {
-            go.GetComponent<InteractiveItem>().enabled = m_dragInputSystem;
-        }
+            case DeviceType.CARDBOARD:
+                ret = Camera.main.transform;
+                break;
 
-        foreach (GameObject go in m_physicItems.Keys)
-        {
-            m_physicItems[go].enabled = !m_dragInputSystem;
-        }
+            case DeviceType.RIFT:
+                MainController = GameObject.Find(InputStatics.OculusMainController);
+                AuxiliarController = GameObject.Find(InputStatics.OculusAuxiliarController);
+                break;
 
-        ModuleEvents.Instance.RaiseEvent(null, Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), new BoolEventArgs(m_dragInputSystem));
+            case DeviceType.VIVE:
+                MainController = GameObject.Find(InputStatics.SteamVRMainController);
+                AuxiliarController = GameObject.Find(InputStatics.SteamVRAuxiliarController);
+
+                break;
+            case DeviceType.WINDOWS:
+                ret = ret = Camera.main.transform;
+                break;
+        }
     }
 
-    public bool IsGragEnabled()
+    public bool GetMainTriggerButton(InputButtonStates state)
     {
-        return m_dragInputSystem;
+        return m_deviceInput.MainTiggerButton(state);
+    }
+
+    public bool GetAuxiliarTriggerButton(InputButtonStates state)
+    {
+        return m_deviceInput.AuxiliarTiggerButton(state);
+    }
+
+    public DeviceInputRift GetSelectionMethodRift()
+    {
+        if (m_deviceInput != null)
+            return (DeviceInputRift)m_deviceInput;
+
+        return null;
+    }
+
+    public void SetControllers(GameObject main, GameObject aux)
+    {
+        MainController = main;
+        AuxiliarController = aux;
     }
 }

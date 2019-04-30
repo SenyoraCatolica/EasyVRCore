@@ -13,7 +13,7 @@ public class GrabInteractiveItem : MonoBehaviour
     {
         ModuleInput.Instance.RegisterPhysicItem(this, gameObject);
 
-        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnUnGrabItem"), OnGrabbed);
+        ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnGrabItem"), OnGrabbed);
         ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREvent>("Events/OnUnGrabItem"), OnReleased);
 
     }

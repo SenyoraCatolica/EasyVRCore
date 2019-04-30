@@ -41,7 +41,7 @@ public class DeviceInputFactory
 
         if(config != null)
         {
-            switch(config.deviceSelection)
+            switch (config.deviceSelection)
             {
                 case DeviceSelection.CARDBOARD:
                     {
@@ -49,9 +49,15 @@ public class DeviceInputFactory
                         ModuleInput.Instance.Device = DeviceType.CARDBOARD;
                         break;
                     }
-                case DeviceSelection.VIVEOrOCULUS:
+                case DeviceSelection.VIVE:
                     {
                         deviceInput = new DeviceInputVive();
+                        break;
+                    }
+
+                case DeviceSelection.RIFT:
+                    {
+                        deviceInput = new DeviceInputRift();
                         break;
                     }
             }
@@ -60,7 +66,7 @@ public class DeviceInputFactory
         deviceInput.Init(config);
         DetectConnectedHDM();
         return deviceInput;
-   }
+    }
 
     private void DetectConnectedHDM()
     {

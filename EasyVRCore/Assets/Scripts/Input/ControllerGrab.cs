@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class ControllerGrab : MonoBehaviour
 {
+    [SerializeField] GameObject m_handModel;
+    [SerializeField] GameObject m_controllerModel;
+
+    Animator m_handAnimator;
+
     GameObject m_colliderObject;
     GameObject m_grabedObject;
     LineRenderer m_line;
@@ -17,17 +22,19 @@ public class ControllerGrab : MonoBehaviour
 
     private void Start()
     {
-        m_enabled = ModuleInput.Instance.IsGragEnabled();
         ModuleEvents.Instance.RegisterEventListener(Resources.Load<EVREventBool>("Events/OnInteractionModeChanged"), OnDragModeChanged);
         m_line = GetComponentInChildren<LineRenderer>();
 
-        if (gameObject.name == InputStatics.MainController)
+        if (gameObject.name == ModuleInput.Instance.MainController.name)
             m_isControllerRight = true;
         else
             m_isControllerRight = false;
 
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         device = SteamVR_Controller.Input((int)trackedObj.index);
+
+        m_handAnimator = m_handModel.GetComponent<Animator>();
+        m_handModel.SetActive(true);
     }
 
     private void Update()
@@ -36,7 +43,7 @@ public class ControllerGrab : MonoBehaviour
         {
             if(m_isControllerRight)
             {
-                if (Input.GetButtonUp(InputStatics.Main_Selection))
+                if (ModuleInput.Instance.GetMainTriggerButton(InputButtonStates.UP))
                 {
                     if (m_colliderObject && !m_grabedObject)
                     {
@@ -54,7 +61,7 @@ public class ControllerGrab : MonoBehaviour
 
             else
             {
-                if (Input.GetButtonUp(InputStatics.Auxiliar_Selection))
+                if (ModuleInput.Instance.GetAuxiliarTriggerButton(InputButtonStates.UP))
                 {
                     if (m_colliderObject && !m_grabedObject)
                     {
@@ -140,6 +147,12 @@ public class ControllerGrab : MonoBehaviour
     {
         m_enabled = !((BoolEventArgs)eventArgs).Bool;
 
-        m_line.enabled = !m_enabled;        
+        m_line.enabled = !m_enabled;
+
+        if(m_handModel)
+            m_handModel.SetActive(m_enabled);
+
+        if(m_controllerModel)
+            m_controllerModel.SetActive(!m_enabled);
     }
 }
