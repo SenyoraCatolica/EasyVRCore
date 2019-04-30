@@ -21,6 +21,8 @@ public class DeviceInputCardboard : DeviceInputBase
         m_radialImage = m_inputCanvas.transform.Find("Radial").GetComponent<Image>();
         m_rayLength = Camera.main.farClipPlane;
         m_raySetPosition = Camera.main.transform;
+
+        ModuleInput.Instance.SetControllers(Camera.main.gameObject, null);
     }
 
     public override void Init(InputGeneralConfig config)
