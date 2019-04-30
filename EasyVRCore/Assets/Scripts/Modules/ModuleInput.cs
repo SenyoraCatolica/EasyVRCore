@@ -222,4 +222,12 @@ public class ModuleInput : Module
     {
         return m_deviceInput.AuxiliarTiggerButton(state);
     }
+
+    public DeviceInputRift GetSelectionMethodRift()
+    {
+        if (m_deviceInput != null)
+            return (DeviceInputRift)m_deviceInput;
+
+        return null;
+    }
 }

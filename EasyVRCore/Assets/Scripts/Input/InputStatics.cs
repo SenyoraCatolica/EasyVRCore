@@ -23,5 +23,8 @@ public static class InputStatics
     public static readonly string Vertical_Auxiliar_Axis = "L_Vertical";
     public static readonly string Auxiliar_Selection = "L_Selection";
     public static readonly string Auxiliar_Trigger = "L_Trigger";
-    public static readonly string Auxiliar_Grip = "L_Grip";   
+    public static readonly string Auxiliar_Grip = "L_Grip";
+
+    //tags
+    public static readonly string PlayerHandCollider = "PlayerHand";
 }

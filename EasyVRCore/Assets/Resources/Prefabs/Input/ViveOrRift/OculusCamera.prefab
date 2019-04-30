@@ -170,7 +170,8 @@ GameObject:
   - component: {fileID: 305471937}
   - component: {fileID: 3290358612894769461}
   - component: {fileID: 7962021451586901002}
-  - component: {fileID: 4266264222320179758}
+  - component: {fileID: 8081297428765152220}
+  - component: {fileID: 1218175983555905726}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -222,7 +223,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4266264222320179758
+--- !u!114 &8081297428765152220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,11 +232,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 305471936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a23492304fca54c995319e6e70dac6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f1a54fc29cf73e4eaa572a22fdd730a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_handModel: {fileID: 0}
-  m_controllerModel: {fileID: 0}
+  OtherHandReference: {fileID: 7025294789136977543}
+  NodeType: 5
+  GrabDistance: 0.1
+  ThrowMultiplier: 1.5
+--- !u!114 &1218175983555905726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305471936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3484eec4802e7489dc0f6232f99be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeType: 5
 --- !u!1 &1003509986
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +491,8 @@ GameObject:
   - component: {fileID: 1173177735}
   - component: {fileID: 485392289045169427}
   - component: {fileID: 2404845512285224822}
-  - component: {fileID: 7351901416756648556}
+  - component: {fileID: 7025294789136977543}
+  - component: {fileID: 4906349268627248064}
   m_Layer: 0
   m_Name: LeftHandAnchor
   m_TagString: Untagged
@@ -527,7 +544,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7351901416756648556
+--- !u!114 &7025294789136977543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -536,11 +553,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173177734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a23492304fca54c995319e6e70dac6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f1a54fc29cf73e4eaa572a22fdd730a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_handModel: {fileID: 0}
-  m_controllerModel: {fileID: 0}
+  OtherHandReference: {fileID: 8081297428765152220}
+  NodeType: 4
+  GrabDistance: 0.1
+  ThrowMultiplier: 1.5
+--- !u!114 &4906349268627248064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173177734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3484eec4802e7489dc0f6232f99be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeType: 4
 --- !u!1 &1602057039
 GameObject:
   m_ObjectHideFlags: 0

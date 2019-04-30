@@ -43,6 +43,8 @@ public class DeviceInputVive : DeviceInputBase
         return ModuleInput.Instance.MainController.transform;
     }
 
+    #region ButtonsMapping
+
     public override bool MainTiggerButton(InputButtonStates state)
     {
 
@@ -51,13 +53,14 @@ public class DeviceInputVive : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = Input.GetButtonUp(InputStatics.Main_Trigger);
+                ret = (Input.GetButtonUp(InputStatics.Main_Trigger));
                 break;
             case InputButtonStates.DOWN:
-                ret = Input.GetButtonDown(InputStatics.Main_Trigger);
+                ret = (Input.GetButtonDown(InputStatics.Main_Trigger));
                 break;
+
             case InputButtonStates.PRESS:
-                ret = Input.GetButton(InputStatics.Main_Trigger);
+                ret = (Input.GetButton(InputStatics.Main_Trigger));
                 break;
             case InputButtonStates.NONE:
                 break;
@@ -68,18 +71,20 @@ public class DeviceInputVive : DeviceInputBase
 
     public override bool AuxiliarTiggerButton(InputButtonStates state)
     {
+
         bool ret = false;
 
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = Input.GetButtonUp(InputStatics.Auxiliar_Trigger);
+                ret = (Input.GetButtonUp(InputStatics.Auxiliar_Trigger));
                 break;
             case InputButtonStates.DOWN:
-                ret = Input.GetButtonDown(InputStatics.Auxiliar_Trigger);
+                ret = (Input.GetButtonDown(InputStatics.Auxiliar_Trigger));
                 break;
+
             case InputButtonStates.PRESS:
-                ret = Input.GetButton(InputStatics.Auxiliar_Trigger);
+                ret = (Input.GetButton(InputStatics.Auxiliar_Trigger));
                 break;
             case InputButtonStates.NONE:
                 break;
@@ -87,4 +92,54 @@ public class DeviceInputVive : DeviceInputBase
 
         return ret;
     }
+
+    public override bool MainGripButton(InputButtonStates state)
+    {
+        bool ret = false;
+
+        switch (state)
+        {
+            case InputButtonStates.UP:
+                ret = (Input.GetButtonUp(InputStatics.Main_Grip));
+                break;
+            case InputButtonStates.DOWN:
+                ret = (Input.GetButtonDown(InputStatics.Main_Grip));
+                break;
+
+            case InputButtonStates.PRESS:
+                ret = (Input.GetButton(InputStatics.Main_Grip));
+                break;
+            case InputButtonStates.NONE:
+                break;
+        }
+
+        return ret;
+    }
+
+    public override bool AuxiliarGripButton(InputButtonStates state)
+    {
+        bool ret = false;
+
+        switch (state)
+        {
+            case InputButtonStates.UP:
+                ret = (Input.GetButtonUp(InputStatics.Auxiliar_Grip));
+                break;
+            case InputButtonStates.DOWN:
+                ret = (Input.GetButtonDown(InputStatics.Auxiliar_Grip));
+                break;
+
+            case InputButtonStates.PRESS:
+                ret = (Input.GetButton(InputStatics.Auxiliar_Grip));
+                break;
+            case InputButtonStates.NONE:
+                break;
+        }
+
+        return ret;
+    }
+
+
+    #endregion
+
 }

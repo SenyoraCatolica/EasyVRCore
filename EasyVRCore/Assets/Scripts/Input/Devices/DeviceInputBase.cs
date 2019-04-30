@@ -22,7 +22,10 @@ public abstract class DeviceInputBase : IDeviceInput
     public abstract void ShowSelection(bool enabled);
 
     public abstract bool MainTiggerButton(InputButtonStates state);
+    public abstract bool MainGripButton(InputButtonStates state);
+
     public abstract bool AuxiliarTiggerButton(InputButtonStates state);
+    public abstract bool AuxiliarGripButton(InputButtonStates state);
 
 
     public virtual void Update(Dictionary<GameObject, IInteractiveItem> interactiveItems)

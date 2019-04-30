@@ -55,6 +55,7 @@ public class DeviceInputCardboard : DeviceInputBase
             m_inputCanvas.enabled = true;
         }
     }
+    #region ButtonsMapping
 
     public override bool MainTiggerButton(InputButtonStates state)
     {
@@ -64,13 +65,14 @@ public class DeviceInputCardboard : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = Input.GetButtonUp(InputStatics.Main_Selection);
+                ret = (Input.GetButtonUp(InputStatics.Main_Selection));
                 break;
             case InputButtonStates.DOWN:
-                ret = Input.GetButtonDown(InputStatics.Main_Selection);
+                ret = (Input.GetButtonDown(InputStatics.Main_Selection));
                 break;
+
             case InputButtonStates.PRESS:
-                ret = Input.GetButton(InputStatics.Main_Selection);
+                ret = (Input.GetButton(InputStatics.Main_Selection));
                 break;
             case InputButtonStates.NONE:
                 break;
@@ -81,18 +83,20 @@ public class DeviceInputCardboard : DeviceInputBase
 
     public override bool AuxiliarTiggerButton(InputButtonStates state)
     {
+
         bool ret = false;
 
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = Input.GetButtonUp(InputStatics.Auxiliar_Trigger);
+                ret = (Input.GetButtonUp(InputStatics.Auxiliar_Selection));
                 break;
             case InputButtonStates.DOWN:
-                ret = Input.GetButtonDown(InputStatics.Auxiliar_Trigger);
+                ret = (Input.GetButtonDown(InputStatics.Auxiliar_Selection));
                 break;
+
             case InputButtonStates.PRESS:
-                ret = Input.GetButton(InputStatics.Auxiliar_Trigger);
+                ret = (Input.GetButton(InputStatics.Auxiliar_Selection));
                 break;
             case InputButtonStates.NONE:
                 break;
@@ -100,4 +104,17 @@ public class DeviceInputCardboard : DeviceInputBase
 
         return ret;
     }
+
+    public override bool MainGripButton(InputButtonStates state)
+    {
+        return false;
+    }
+
+    public override bool AuxiliarGripButton(InputButtonStates state)
+    {
+        return false;
+    }
+
+
+    #endregion
 }

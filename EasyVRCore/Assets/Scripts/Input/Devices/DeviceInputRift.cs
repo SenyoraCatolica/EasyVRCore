@@ -8,7 +8,8 @@ public class DeviceInputRift : DeviceInputBase
     private Canvas m_inputCanvas = null;
     bool m_mainAxisInUse = false;
     bool m_auxAxisInUse = false;
-
+    bool m_mainGripAxisInUse = false;
+    bool m_auxGripAxisInUse = false;
 
     public DeviceInputRift()
     {
@@ -45,6 +46,8 @@ public class DeviceInputRift : DeviceInputBase
     {
         return ModuleInput.Instance.MainController.transform;
     }
+
+    #region ButtonsMapping
 
     public override bool MainTiggerButton(InputButtonStates state)
     {
@@ -121,4 +124,77 @@ public class DeviceInputRift : DeviceInputBase
 
         return ret;
     }
+
+    public override bool MainGripButton(InputButtonStates state)
+    {
+        bool ret = false;
+
+        switch (state)
+        {
+            case InputButtonStates.UP:
+                ret = (Input.GetAxis(InputStatics.Main_Grip) < 0.5f);
+                break;
+            case InputButtonStates.DOWN:
+                if (Input.GetAxis(InputStatics.Main_Grip) != 0)
+                {
+                    if (!m_mainGripAxisInUse)
+                    {
+                        m_auxAxisInUse = true;
+                        ret = true;
+                    }
+                }
+
+                if (Input.GetAxisRaw(InputStatics.Main_Grip) == 0)
+                {
+                    m_mainGripAxisInUse = false;
+                }
+                break;
+
+            case InputButtonStates.PRESS:
+                ret = (Input.GetAxisRaw(InputStatics.Main_Grip) != 0);
+                break;
+            case InputButtonStates.NONE:
+                break;
+        }
+
+        return ret;
+    }
+
+    public override bool AuxiliarGripButton(InputButtonStates state)
+    {
+        bool ret = false;
+
+        switch (state)
+        {
+            case InputButtonStates.UP:
+                ret = (Input.GetAxis(InputStatics.Auxiliar_Grip) < 0.5f);
+                break;
+            case InputButtonStates.DOWN:
+                if (Input.GetAxis(InputStatics.Auxiliar_Grip) != 0)
+                {
+                    if (!m_auxGripAxisInUse)
+                    {
+                        m_auxAxisInUse = true;
+                        ret = true;
+                    }
+                }
+
+                if (Input.GetAxisRaw(InputStatics.Auxiliar_Grip) == 0)
+                {
+                    m_auxGripAxisInUse = false;
+                }
+
+                break;
+
+            case InputButtonStates.PRESS:
+                ret = (Input.GetAxisRaw(InputStatics.Auxiliar_Grip) != 0);
+                break;
+            case InputButtonStates.NONE:
+                break;
+        }
+
+        return ret;
+    }
+
+    #endregion
 }
