@@ -302,7 +302,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b768d27849c4a54d8a445ebf5aa1ecb, type: 2}
+  - {fileID: 2100000, guid: f514666266f00ff409e557f87544c237, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -803,7 +803,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b768d27849c4a54d8a445ebf5aa1ecb, type: 2}
+  - {fileID: 2100000, guid: b53e44da17cb6294c9663f012f522c68, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1359,6 +1359,16 @@ PrefabInstance:
         type: 3}
       propertyPath: SelectionTime
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 621333795489816004, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 6183627550511740349, guid: c32ff180b67fec642aecb50471fe1f7d,
+        type: 3}
+      propertyPath: m_Text
+      value: Slider Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c32ff180b67fec642aecb50471fe1f7d, type: 3}
