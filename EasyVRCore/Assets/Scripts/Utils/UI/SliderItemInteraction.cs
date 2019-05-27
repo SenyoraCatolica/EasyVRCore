@@ -10,23 +10,13 @@ public class SliderItemInteraction : MonoBehaviour
     float currentValue = 0;
     TimeBasedInteractiveItem m_interactiveItem;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        m_interactiveItem = GetComponent<TimeBasedInteractiveItem>();
     }
 
-    public void OnEnter()
+    private void Update()
     {
-        currentValue = 0;
-    }
-
-    public void OnHover()
-    {
-       
-    }
-
-    public void OnExit()
-    {
-        currentValue = 0;
+        slider.value = m_interactiveItem.GetCurrentTime();
     }
 }

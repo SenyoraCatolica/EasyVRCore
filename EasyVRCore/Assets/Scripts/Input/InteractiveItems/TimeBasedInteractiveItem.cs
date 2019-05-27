@@ -43,9 +43,15 @@ namespace ExtendedVRUI
                 {
                     Select();
                     m_currentTime = 0f;
-                    OnHoverValue(m_currentTime);
+
+                    OnHoverValue?.Invoke(m_currentTime);
                 }
             }
+        }
+
+        public float GetCurrentTime()
+        {
+            return m_currentTime;
         }
     }
 }
