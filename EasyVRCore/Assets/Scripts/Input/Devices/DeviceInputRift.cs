@@ -84,7 +84,7 @@ public class DeviceInputRift : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = (Input.GetAxis(InputStatics.Main_Trigger_Rift) < 0.5f);
+                ret = (Input.GetAxis(InputStatics.Main_Trigger_Rift) < 0.2f);
                 break;
             case InputButtonStates.DOWN:
                 if (Input.GetAxis(InputStatics.Main_Trigger_Rift) != 0)
@@ -120,7 +120,7 @@ public class DeviceInputRift : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = (Input.GetAxis(InputStatics.Auxiliar_Trigger) < 0.5f);
+                ret = (Input.GetAxis(InputStatics.Auxiliar_Trigger) < 0.2f);
                 break;
             case InputButtonStates.DOWN:
                 if (Input.GetAxis(InputStatics.Main_Trigger) != 0)
@@ -156,7 +156,7 @@ public class DeviceInputRift : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = (Input.GetAxis(InputStatics.Main_Grip) < 0.5f);
+                ret = (Input.GetAxis(InputStatics.Main_Grip) < 0.2f);
                 break;
             case InputButtonStates.DOWN:
                 if (Input.GetAxis(InputStatics.Main_Grip) != 0)
@@ -191,7 +191,7 @@ public class DeviceInputRift : DeviceInputBase
         switch (state)
         {
             case InputButtonStates.UP:
-                ret = (Input.GetAxis(InputStatics.Auxiliar_Grip) < 0.5f);
+                ret = (Input.GetAxis(InputStatics.Auxiliar_Grip) < 0.2f);
                 break;
             case InputButtonStates.DOWN:
                 if (Input.GetAxis(InputStatics.Auxiliar_Grip) != 0)

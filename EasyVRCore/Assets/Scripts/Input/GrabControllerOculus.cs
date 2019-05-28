@@ -8,7 +8,7 @@ public class GrabControllerOculus : MonoBehaviour
 
     public GrabControllerOculus OtherHandReference;
     public XRNode NodeType;
-    public float GrabDistance = 0.1f;
+    public float GrabDistance = 0.05f;
     public float ThrowMultiplier = 1.5f;
 
     public Transform CurrentGrabObject
@@ -76,7 +76,7 @@ public class GrabControllerOculus : MonoBehaviour
                     _currentGrabObject = colliders[0].transform;
 
                     //does other hand currently grab object? then release it!
-                    if (OtherHandReference.CurrentGrabObject != null)
+                    if (OtherHandReference.CurrentGrabObject != null && OtherHandReference.CurrentGrabObject == _currentGrabObject)
                     {
                         OtherHandReference.CurrentGrabObject = null;
                     }
@@ -90,7 +90,6 @@ public class GrabControllerOculus : MonoBehaviour
             //if we we release grab button, release current object
             if (CheckGripButton(InputButtonStates.UP))
             {
-
                 //set grab object to non-kinematic (enable physics)
                 Rigidbody _objectRGB = _currentGrabObject.GetComponent<Rigidbody>();
                 _objectRGB.isKinematic = false;

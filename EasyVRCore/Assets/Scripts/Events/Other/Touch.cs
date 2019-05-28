@@ -6,10 +6,10 @@ public class Touch : ScriptableObject
 {
     public void OnTouch(String gameObjectName)
     {
-        Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));    //todelete
+        //Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));    //todelete
 
-        /*string completePath = "Prefabs/" + gameObjectName;
+        string completePath = "Prefabs/" + gameObjectName;
         GameObject go = Resources.Load<GameObject>(completePath);
-        Instantiate(go);*/
+        Instantiate(go);
     }
 }
