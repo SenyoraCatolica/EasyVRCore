@@ -17,7 +17,7 @@ public class ControllerGrab : MonoBehaviour
     SteamVR_TrackedObject trackedObj;
     SteamVR_Controller.Device device;
 
-    bool m_enabled = false;
+    bool m_enabled = true;
     bool m_isControllerRight;
 
     private void Start()
