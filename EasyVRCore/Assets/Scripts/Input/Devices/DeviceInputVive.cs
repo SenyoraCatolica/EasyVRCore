@@ -6,12 +6,14 @@ using UnityEngine;
 public class DeviceInputVive : DeviceInputBase
 {
     private Canvas m_inputCanvas = null;
+    private GameObject m_camera = null;
 
     public DeviceInputVive()
     {
         GameObject go = Resources.Load("Prefabs/Input/ViveOrRift/SteamVRCamera") as GameObject;
-        GameObject tmp = MonoBehaviour.Instantiate<GameObject>(go);
+        m_camera = MonoBehaviour.Instantiate<GameObject>(go);
         m_rayLength = Mathf.Infinity;
+        SetControllers();
     }
 
     public override void Init(InputGeneralConfig config)
@@ -41,6 +43,11 @@ public class DeviceInputVive : DeviceInputBase
     private Transform GetController(GameObject go)
     {
         return ModuleInput.Instance.MainController.transform;
+    }
+
+    private void SetControllers()
+    {
+        ModuleInput.Instance.SetControllers(m_camera.transform.GetChild(1).gameObject, m_camera.transform.GetChild(0).gameObject);
     }
 
     #region ButtonsMapping

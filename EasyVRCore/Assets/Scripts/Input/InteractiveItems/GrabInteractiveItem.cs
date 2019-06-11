@@ -18,11 +18,6 @@ public class GrabInteractiveItem : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        Debug.Log(GetComponent<Rigidbody>().velocity.ToString());
-    }
-
     public void OnGrabbed(object sender, EventArgs eventArgs)
     {
         Debug.Log(gameObject.name + " Grabbed");

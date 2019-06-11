@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 114330043372672708}
   - component: {fileID: 1652672020421201918}
   m_Layer: 0
-  m_Name: ViveOrRiftCamera
+  m_Name: SteamVRCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -703,7 +703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4873294999354782
 Transform:
   m_ObjectHideFlags: 0
